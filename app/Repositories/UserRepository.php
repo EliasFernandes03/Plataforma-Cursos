@@ -16,4 +16,11 @@ class UserRepository
     {
         return User::findOrFail($id);
     }
+    public function create($data)
+    {
+        if (isset($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        }
+        return User::create($data);
+    }
 }

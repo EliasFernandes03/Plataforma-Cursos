@@ -26,4 +26,19 @@ class UserController extends Controller
         $user = $this->userRepository->getOne($id);
         return response()->json($user);
     }
+
+    public function create(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'nullable|min:8',
+            'role' => 'required|in:admin,teacher,student',
+            'provider' => 'nullable|string',
+            'provider_id' => 'nullable|string',
+            'avatar' => 'nullable|url',
+        ]);
+        $this->userRepository->create($data);
+        return response()->json(['message' => 'Usuario Criado Com sucesso'], 200);
+    }
 }

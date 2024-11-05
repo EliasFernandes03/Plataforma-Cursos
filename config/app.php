@@ -123,4 +123,7 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'secret' => env('JWT_SECRET', '123'),
+
+
 ];

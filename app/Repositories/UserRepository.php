@@ -38,4 +38,10 @@ class UserRepository
     {
         return $user->delete();
     }
+
+    public function findByEmail(string $email)
+    {
+        return User::where('email', $email)->first();
+
+    }
 }

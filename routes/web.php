@@ -10,6 +10,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
+
 Route::middleware(['web'])->group(function () {
     Route::get('auth/google', function () {
         return Socialite::driver('google')->redirect();

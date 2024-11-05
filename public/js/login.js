@@ -15,15 +15,13 @@ async function handleLogin(event) {
 
         if (response.ok) {
             const data = await response.json();
-            alert('Login realizado com sucesso!');
-            console.log('Token de acesso:', data.access_token);
+            window.location.href = "/dashboard"
         } else {
             const errorData = await response.json();
             alert(errorData.message || 'Erro ao fazer login');
         }
     } catch (error) {
         console.error('Erro na requisição:', error);
-        alert('Ocorreu um erro. Tente novamente.');
     }
 }
 

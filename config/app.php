@@ -125,5 +125,4 @@ return [
 
     'secret' => env('JWT_SECRET', '123'),
 
-
 ];

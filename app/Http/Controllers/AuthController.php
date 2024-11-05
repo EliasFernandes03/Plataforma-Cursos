@@ -36,13 +36,12 @@ class AuthController extends Controller
         $secretKey = config('app.secret');
         
         $payload = [
-            'iss' => "laravel_app", // Emissor do token
-            'sub' => $user->id, // Identificação do usuário
-            'iat' => Carbon::now()->timestamp, // Timestamp de criação
-            'exp' => Carbon::now()->addHours(2)->timestamp, // Expiração do token (2 horas)
+            'iss' => "laravel_app", 
+            'sub' => $user->id, 
+            'iat' => Carbon::now()->timestamp, 
+            'exp' => Carbon::now()->addHours(2)->timestamp, 
         ];
 
-        // Gera o token JWT com a chave secreta
         return JWT::encode($payload, $secretKey, 'HS256');
     }
 }

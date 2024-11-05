@@ -16,11 +16,26 @@ class UserRepository
     {
         return User::findOrFail($id);
     }
+
     public function create($data)
     {
         if (isset($data['password'])) {
             $data['password'] = Hash::make($data['password']);
         }
         return User::create($data);
+    }
+
+    public function update(User $user, array $data)
+    {
+        if (isset($data['password'])) {
+            $data['password'] = bcrypt($data['password']);
+        }
+        $user->update($data);
+        return $user;
+    }
+
+    public function delete(User $user)
+    {
+        return $user->delete();
     }
 }

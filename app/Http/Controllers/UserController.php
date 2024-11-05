@@ -41,4 +41,23 @@ class UserController extends Controller
         $this->userRepository->create($data);
         return response()->json(['message' => 'Usuario Criado Com sucesso'], 200);
     }
+
+    public function update(Request $request, int $id)
+    {
+        $user = $this->userRepository->getOne($id);
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'email|unique:users,email,' . $id,
+            'password' => 'nullable|min:8'
+        ]);
+        $this->userRepository->update($user, $data);
+        return response()->json(['message' => 'Usuario Atualizado Com sucesso'], 200);
+    }
+
+    public function delete(Request $request, int $id)
+    {
+        $user = $this->userRepository->getOne($id);
+        $this->userRepository->delete($user);
+        return response()->json(['message' => 'Usuario Deletado Com sucesso'], 204);
+    }
 }

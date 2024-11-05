@@ -54,7 +54,7 @@ class UserController extends Controller
         return response()->json(['message' => 'Usuario Atualizado Com sucesso'], 200);
     }
 
-    public function delete(Request $request, int $id)
+    public function delete(int $id)
     {
         $user = $this->userRepository->getOne($id);
         $this->userRepository->delete($user);

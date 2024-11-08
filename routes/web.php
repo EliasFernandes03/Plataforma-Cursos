@@ -10,10 +10,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::prefix('')->middleware('jwt.auth')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    });
+Route::get('/dashboard', function () {
+    return view('dashboard');
 });
 
 Route::middleware(['web'])->group(function () {

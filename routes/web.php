@@ -10,8 +10,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
+Route::prefix('')->middleware('jwt.auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    });
 });
 
 Route::middleware(['web'])->group(function () {
@@ -33,7 +35,9 @@ Route::middleware(['web'])->group(function () {
         );
 
         Auth::login($user);
+        $token = $this->generateJwtToken($user);
 
-        return redirect('/dashboard');
+        return redirect('/dashboard')
+            ->cookie('jwt_token', $token, 120, '/', null, true, true);
     });
 });

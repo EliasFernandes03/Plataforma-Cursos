@@ -25,7 +25,10 @@ class AuthController extends Controller
         if (Auth::guard('web')->attempt($credentials)) {
             $user = Auth::user();
             $token = $this->generateJwtToken($user);
-            return response()->json(['access_token' => $token, 'token_type' => 'Bearer'], 200);
+            return response()->json([
+                'message' => 'Login Successfull',
+                'token' => $token,
+            ])->cookie('jwt_token', $token, 120, '/', null, true, true);
         }
 
         return response()->json(['message' => 'Invalid credentials'], 401);
@@ -34,12 +37,12 @@ class AuthController extends Controller
     protected function generateJwtToken($user)
     {
         $secretKey = config('app.secret');
-        
+
         $payload = [
-            'iss' => "laravel_app", 
-            'sub' => $user->id, 
-            'iat' => Carbon::now()->timestamp, 
-            'exp' => Carbon::now()->addHours(2)->timestamp, 
+            'iss' => "laravel_app",
+            'sub' => $user->id,
+            'iat' => Carbon::now()->timestamp,
+            'exp' => Carbon::now()->addHours(2)->timestamp,
         ];
 
         return JWT::encode($payload, $secretKey, 'HS256');

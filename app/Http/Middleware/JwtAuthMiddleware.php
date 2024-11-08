@@ -3,33 +3,30 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Exceptions\TokenExpiredException;
-use Tymon\JWTAuth\Exceptions\TokenInvalidException;
-use Tymon\JWTAuth\Exceptions\JWTException;
+use Firebase\JWT\JWT;
+use Firebase\JWT\ExpiredException;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
-class JwtAuthMiddleware
+class AuthenticateWithJwt
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        try {
-            $token = $request->cookie('jwt_token');
-            $user = JWTAuth::parseToken()->authenticate();
-            if (!$user) {
-                return response()->json(['error' => 'User not Found'], 404);
-            }
-        } catch (TokenExpiredException $e) {
-            return response()->json(['error' => 'Token expired', 401]);
-        } catch (TokenInvalidException $e) {
-            return response()->json(['error' => 'Token invalid'], 401);
-        } catch (JWTException $e) {
-            return response()->json(['error' => 'Token is missing'], 401);
+        $token = $request->cookie('jwt_token');
+
+        if (!$token) {
+            return response()->json(['message' => 'Unauthorized'], 401);
         }
+
+        try {
+            $credentials = JWT::decode($token, config('app.secret'));
+            $request->attributes->add(['user_id' => $credentials->sub]);
+        } catch (ExpiredException $e) {
+            return response()->json(['message' => 'Token has expired'], 401);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Invalid token'], 401);
+        }
+
         return $next($request);
     }
 }

@@ -26,7 +26,7 @@ class AuthController extends Controller
             $user = Auth::user();
             $token = $this->generateJwtToken($user);
             return response()->json([
-                'message' => 'Login Successfull',
+                'message' => 'Login Successful',
                 'token' => $token,
             ])->cookie('jwt_token', $token, 120, '/', null, true, true);
         }

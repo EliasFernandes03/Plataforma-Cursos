@@ -10,13 +10,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
+
 Route::middleware(['web'])->group(function () {
     Route::get('auth/google', function () {
         return Socialite::driver('google')->redirect();
     })->name('auth.google');
 
     Route::get('auth/google/callback', function () {
-        $googleUser = Socialite::driver('google')->user();
+        $googleUser = Socialite::driver('google')->stateless()->user();
 
         $user = User::firstOrCreate(
             ['email' => $googleUser->getEmail()],
@@ -30,6 +34,6 @@ Route::middleware(['web'])->group(function () {
 
         Auth::login($user);
 
-        return redirect('/');
+        return redirect('/dashboard');
     });
 });

@@ -26,19 +26,29 @@
                 <label for="">Password *</label>
                 <input type="password" name="" id="password" placeholder="Insira sua senha">
                 <a href="">Esqueci minha senha</a>
-                <button id="loginButton" >Acessar Conta</button>
+                <button id="loginButton">Acessar Conta</button>
             </div>
             <div class="accessAccount">
-
-                <p>Ou faca login com</p> <img
-                    src="https://play-lh.googleusercontent.com/KSuaRLiI_FlDP8cM4MzJ23ml3og5Hxb9AapaGTMZ2GgR103mvJ3AAnoOFz1yheeQBBI"
-                    alt="" class="logoGmail">
+                <p>Ou faça login com</p>
+                <img src="https://play-lh.googleusercontent.com/KSuaRLiI_FlDP8cM4MzJ23ml3og5Hxb9AapaGTMZ2GgR103mvJ3AAnoOFz1yheeQBBI"
+                    alt="Login com Google" class="logoGmail" id="googleLoginButton" onclick="loginGoogle()">
             </div>
         </div>
-
     </div>
 
     <script src="{{ asset('js/login.js') }}"></script>
+    <script>
+        function loginGoogle() {
+            const googleLoginButton = document.querySelector('#googleLoginButton');
+            if (googleLoginButton) {
+                googleLoginButton.addEventListener('click', function () {
+                    window.location.href = "{{ route('auth.google') }}";
+                });
+            } else {
+                console.log('Botão Google não encontrado.');
+            }
+        }
+    </script>
 </body>
 
 </html>

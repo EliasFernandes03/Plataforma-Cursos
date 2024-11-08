@@ -125,3 +125,14 @@ body {
     justify-content: center;
     gap: 1vw;
 }
+
+@media (max-width: 800px) {
+    .form {
+        background-color: red;
+        /* Teste visual para confirmar */
+        height: 50vh;
+        width: 80vw;
+        /* Ajuste para mobile */
+        border-radius: 5px;
+    }
+}

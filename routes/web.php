@@ -33,7 +33,9 @@ Route::middleware(['web'])->group(function () {
         );
 
         Auth::login($user);
+        $token = $this->generateJwtToken($user);
 
-        return redirect('/dashboard');
+        return redirect('/dashboard')
+            ->cookie('jwt_token', $token, 120, '/', null, true, true);
     });
 });

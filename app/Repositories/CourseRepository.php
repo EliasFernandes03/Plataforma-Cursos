@@ -27,4 +27,9 @@ class CourseRepository
         $course->update($data);
         return $course;
     }
+
+    public function delete(Course $course)
+    {
+        return $course->delete();
+    }
 }

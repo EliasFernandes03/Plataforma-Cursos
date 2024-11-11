@@ -41,4 +41,11 @@ class CourseController extends Controller
         $this->couseRepository->update($course, $data);
         return response()->json(['message' => 'usuario atualizado'], 200);
     }
+
+    public function delete(int $id)
+    {
+        $course = $this->couseRepository->getOne($id);
+        $this->couseRepository->delete($course);
+        return response()->json(['message'=>'Usuario deletado com sucesso'],204);
+    }
 }

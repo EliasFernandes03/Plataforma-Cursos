@@ -2,43 +2,49 @@
 
 namespace Tests\Feature;
 
+use App\Http\Controllers\UserController;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Request;
+use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\CreateUserRequest;
 use Illuminate\Http\Response;
 use Tests\TestCase;
 use Mockery;
-
 
 class UserControllerTest extends TestCase
 {
     use RefreshDatabase;
 
     protected $userRepositoryMock;
+    protected $userController;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->userRepositoryMock = Mockery::mock(UserRepository::class);
-        $this->app->instance(UserRepository::class, $this->userRepositoryMock);
+        $this->userController = new UserController($this->userRepositoryMock);
     }
 
     public function testReturnAllUsers()
     {
         $users = User::factory()->count(3)->make();
         $this->userRepositoryMock->shouldReceive('all')->once()->andReturn($users);
-        $response = $this->getJson('/api/users');
-        $response->assertStatus(Response::HTTP_OK);
-        $response->assertJson($users->toArray());
+
+        $response = $this->userController->index();
+        $this->assertEquals(Response::HTTP_OK, $response->status());
+        $this->assertEquals($users->toArray(), $response->getData(true));
     }
 
     public function testReturnOneUser()
     {
         $user = User::factory()->make(['id' => 1]);
         $this->userRepositoryMock->shouldReceive('getOne')->with(1)->once()->andReturn($user);
-        $response = $this->getJson('/api/users/1');
-        $response->assertStatus(Response::HTTP_OK);
-        $response->assertJson($user->toArray());
+
+        $response = $this->userController->show(1);
+        $this->assertEquals(Response::HTTP_OK, $response->status());
+        $this->assertEquals($user->toArray(), $response->getData(true));
     }
 
     public function testCreateNewUser()
@@ -49,13 +55,20 @@ class UserControllerTest extends TestCase
             'password' => 'password123',
             'role' => 'admin',
         ];
+
+
+        $request = Mockery::mock(CreateUserRequest::class);
+        $request->shouldReceive('validated')->andReturn($data);
+
         $this->userRepositoryMock->shouldReceive('create')->with($data)->once();
-        $response =  $this->postJson('/api/users/create', $data);
-        $response->assertStatus(Response::HTTP_OK);
-        $response->assertJson(['message' => 'Usuario Criado Com sucesso']);
+
+        $response = $this->userController->create($request);
+
+        $this->assertEquals(Response::HTTP_OK, $response->status());
+        $this->assertEquals(['message' => 'Usuario Criado Com sucesso'], $response->getData(true));
     }
 
-    public function updateExistingUser()
+    public function testUpdateExistingUser()
     {
         $user = User::factory()->make(['id' => 1]);
         $data = [
@@ -63,12 +76,17 @@ class UserControllerTest extends TestCase
             'email' => 'updated@example.com',
             'password' => 'newpassword123',
         ];
+
+        $request = Mockery::mock(UpdateUserRequest::class);
+        $request->shouldReceive('validated')->andReturn($data);
+
         $this->userRepositoryMock->shouldReceive('getOne')->with(1)->once()->andReturn($user);
         $this->userRepositoryMock->shouldReceive('update')->with($user, $data)->once();
 
-        $response = $this->putJson('/api/users/update/1', $data);
-        $response->assertStatus(Response::HTTP_OK);
-        $response->assertJson(['message' => 'Usuario Atualizado Com sucesso']);
+        $response = $this->userController->update($request, 1);
+
+        $this->assertEquals(Response::HTTP_OK, $response->status());
+        $this->assertEquals(['message' => 'Usuario Atualizado Com sucesso'], $response->getData(true));
     }
 
     public function testDeleteRemovesUser()
@@ -77,8 +95,7 @@ class UserControllerTest extends TestCase
         $this->userRepositoryMock->shouldReceive('getOne')->with(1)->once()->andReturn($user);
         $this->userRepositoryMock->shouldReceive('delete')->with($user)->once();
 
-        $response = $this->deleteJson('/api/users/delete/1');
-        $response->assertStatus(Response::HTTP_NO_CONTENT);
+        $response = $this->userController->delete(1);
+        $this->assertEquals(Response::HTTP_NO_CONTENT, $response->status());
     }
-
 }

@@ -8,44 +8,44 @@ use App\Http\Requests\UpdateCourseRequest;
 
 class CourseController extends Controller
 {
-    protected $couseRepository;
+    protected $courseRepository;
 
     public function __construct(CourseRepository $courseRepository)
     {
-        $this->couseRepository = $courseRepository;
+        $this->courseRepository = $courseRepository;
     }
 
     public function index()
     {
-        $courses = $this->couseRepository->all();
+        $courses = $this->courseRepository->all();
         return response()->json($courses, 200);
     }
 
     public function show($id)
     {
-        $couse = $this->couseRepository->getOne($id);
+        $couse = $this->courseRepository->getOne($id);
         return response()->json($couse, 200);
     }
 
     public function create(CreateCourseRequest $request)
     {
         $data = $request->validated();
-        $this->couseRepository->create($data);
+        $this->courseRepository->create($data);
         return response()->json(['message' => ' Curso criado com sucesso'], 200);
     }
 
     public function update(UpdateCourseRequest $request, int $id)
     {
-        $course = $this->couseRepository->getOne($id);
+        $course = $this->courseRepository->getOne($id);
         $data = $request->validated();
-        $this->couseRepository->update($course, $data);
+        $this->courseRepository->update($course, $data);
         return response()->json(['message' => 'usuario atualizado'], 200);
     }
 
     public function delete(int $id)
     {
-        $course = $this->couseRepository->getOne($id);
-        $this->couseRepository->delete($course);
+        $course = $this->courseRepository->getOne($id);
+        $this->courseRepository->delete($course);
         return response()->json(['message' => 'Usuario deletado com sucesso'], 204);
     }
 }

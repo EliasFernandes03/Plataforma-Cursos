@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\CreateUserRequest;
 use Illuminate\Http\Response;
 use Tests\TestCase;
@@ -75,12 +76,15 @@ class UserControllerTest extends TestCase
             'email' => 'updated@example.com',
             'password' => 'newpassword123',
         ];
-        $request = new Request($data);
+
+        $request = Mockery::mock(UpdateUserRequest::class);
+        $request->shouldReceive('validated')->andReturn($data);
 
         $this->userRepositoryMock->shouldReceive('getOne')->with(1)->once()->andReturn($user);
         $this->userRepositoryMock->shouldReceive('update')->with($user, $data)->once();
 
         $response = $this->userController->update($request, 1);
+
         $this->assertEquals(Response::HTTP_OK, $response->status());
         $this->assertEquals(['message' => 'Usuario Atualizado Com sucesso'], $response->getData(true));
     }
@@ -91,7 +95,7 @@ class UserControllerTest extends TestCase
         $this->userRepositoryMock->shouldReceive('getOne')->with(1)->once()->andReturn($user);
         $this->userRepositoryMock->shouldReceive('delete')->with($user)->once();
 
-        $response = $this->userController->destroy(1);
+        $response = $this->userController->delete(1);
         $this->assertEquals(Response::HTTP_NO_CONTENT, $response->status());
     }
 }

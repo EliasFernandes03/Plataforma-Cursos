@@ -18,10 +18,12 @@ async function handleLogin(event) {
             window.location.href = "/dashboard"
         } else {
             const errorData = await response.json();
-            alert(errorData.message || 'Erro ao fazer login');
+            errorMessage.textContent = errorData.message || 'Credenciais incorretas';
+            errorMessage.style.display = 'block';
         }
     } catch (error) {
-        console.error('Erro na requisição:', error);
+        errorMessage.textContent = errorData.message || 'Credenciais incorretas';
+        errorMessage.style.display = 'block';
     }
 }
 

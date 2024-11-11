@@ -25,6 +25,7 @@
                 <input type="text" name="" id="email" placeholder="Insira seu login">
                 <label for="">Password *</label>
                 <input type="password" name="" id="password" placeholder="Insira sua senha">
+                <p id="errorMessage" style="color: red; display: none;">Credenciais incorretas</p>
                 <a href="">Esqueci minha senha</a>
                 <button id="loginButton">Acessar Conta</button>
             </div>

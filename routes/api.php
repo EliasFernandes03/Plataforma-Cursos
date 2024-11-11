@@ -17,6 +17,7 @@ Route::prefix('course')->middleware('jwt.auth')->group(function () {
     Route::get('/', [CourseController::class, 'index']);
     Route::get('{id}', [CourseController::class, 'show']);
     Route::post('create', [CourseController::class, 'create']);
+    Route::put('update/{id}', [CourseController::class, 'update']);
 });
 
 Route::post('/login', [AuthController::class, 'login']);

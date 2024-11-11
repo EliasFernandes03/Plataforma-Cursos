@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\CourseRepository;
-
+use App\Http\Requests\CreateCourseRequest;
 
 class CourseController extends Controller
 {
@@ -24,5 +24,12 @@ class CourseController extends Controller
     {
         $couse = $this->couseRepository->getOne($id);
         return response()->json($couse);
+    }
+
+    public function create(CreateCourseRequest $request)
+    {
+        $data = $request->validated();
+        $this->couseRepository->create($data);
+        return response()->json(['message' => ' Curso criado com sucesso']);
     }
 }

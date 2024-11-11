@@ -16,4 +16,9 @@ class CourseRepository
     {
         return Course::findOrFail($id);
     }
+
+    public function create($data)
+    {
+        return Course::create($data);
+    }
 }

@@ -46,6 +46,6 @@ class CourseController extends Controller
     {
         $course = $this->couseRepository->getOne($id);
         $this->couseRepository->delete($course);
-        return response()->json(['message'=>'Usuario deletado com sucesso'],204);
+        return response()->json(['message' => 'Usuario deletado com sucesso'], 204);
     }
 }

@@ -25,12 +25,19 @@ class UserControllerTest extends TestCase
 
     public function testReturnAllUsers()
     {
+        $token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsYXJhdmVsX2FwcCIsInN1YiI6MiwiaWF0IjoxNzMxMzQ5MzAzLCJleHAiOjE3MzEzNTY1MDN9.-CuDqedzmX6S4YnKPQl-ze71UJGjHNWf2l1pbbhr2JY';
+
         $users = User::factory()->count(3)->make();
         $this->userRepositoryMock->shouldReceive('all')->once()->andReturn($users);
-        $response = $this->getJson('/api/users');
+
+        $response = $this->getJson('/api/users', [
+            'Authorization' => "Bearer {$token}"
+        ]);
+        dd($token);
         $response->assertStatus(Response::HTTP_OK);
         $response->assertJson($users->toArray());
     }
+
 
     public function testReturnOneUser()
     {
@@ -80,5 +87,4 @@ class UserControllerTest extends TestCase
         $response = $this->deleteJson('/api/users/delete/1');
         $response->assertStatus(Response::HTTP_NO_CONTENT);
     }
-
 }

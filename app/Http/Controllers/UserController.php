@@ -6,6 +6,7 @@ use App\Repositories\UserRepository;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -54,5 +55,28 @@ class UserController extends Controller
         $user = $this->userRepository->getOne($id);
         $this->userRepository->delete($user);
         return response()->json(['message' => 'Usuario Deletado Com sucesso'], 204);
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        $user = $this->userRepository->findByEmail($request->email);
+        if (!$user) {
+            return response()->json(['message' => 'Usuario não encontrado ', 404]);
+        }
+
+        $token = $this->userRepository->createPasswordResetToken($user);
+        Mail::to($user->email)->send(new \App\Mail\ResetPasswordMail($token));
+
+        return response()->json(['message' => "Email de redefinicão de senha enviado com sucesso $token"]);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $user = $this->userRepository->findByPasswordResetToken($request->token);
+        if (!$user) {
+            return response()->json(['message' => 'Usuario não encontrado ', 404]);
+        }
+        $this->userRepository->resetPassword($user, $request->password);
+        return response()->json(['message' => 'Senha redefinida com sucesso'], 200);
     }
 }

@@ -11,6 +11,8 @@ Route::prefix('users')->middleware('jwt.auth')->group(function () {
     Route::get('/role/{email}', [UserController::class, 'findRoleByEmail']);
     Route::put('update/{id}', [UserController::class, 'update']);
     Route::delete('delete/{id}', [UserController::class, 'delete']);
+    Route::post('/forgot-password', [UserController::class, 'forgotPassword']);
+    Route::post('/reset-password', [UserController::class, 'resetPassword']);
 });
 
 Route::post('users/create', [UserController::class, 'create']);

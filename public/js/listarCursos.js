@@ -62,8 +62,9 @@ function renderCourses(courses) {
 }
 
 function editCourse(courseId) {
-    window.location.href="/editar-curso"
+    window.location.href = `/editar-curso?id=${courseId}`;
 }
+
 
 async function deleteCourse(courseId) {
     try {

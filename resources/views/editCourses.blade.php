@@ -12,6 +12,8 @@
     <div class="form-container">
         <h2>Editar Curso</h2>
         <form onsubmit="event.preventDefault(); updateCourse();">
+            <input type="hidden" id="courseId" name="courseId">
+
             <label for="title">Título:</label>
             <input type="text" id="title" required>
 
@@ -33,7 +35,7 @@
             <button type="submit">Salvar Alterações</button>
         </form>
     </div>
-    <script src="{{ asset('js/editarCurso.js') }}"></script>
+    <script src="{{ asset('js/editarCursos.js') }}"></script>
 </body>
 
 </html>

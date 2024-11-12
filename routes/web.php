@@ -16,7 +16,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/editar-curso', function () {
     return view('editCourses');
-});
+})->name('editar-curso');
 
 Route::middleware(['web'])->group(function () {
     Route::get('auth/google', function () {

@@ -86,11 +86,14 @@ async function deleteCourse(courseId) {
     }
 }
 
-
-
 function enrollCourse(courseId) {
     alert(`Curso ${courseId} selecionado!`);
 }
+function getname() {
+    let nome = localStorage.getItem("name")
+    let span = document.querySelector(".user")
+    span.innerHTML = `Bem vindo , ${nome}.`
+}
 
-
+getname()
 fetchCourses();

@@ -18,6 +18,7 @@ async function handleLogin(event) {
             const data = await response.json();
             localStorage.setItem('token', data.token)
             localStorage.setItem('role', data.role)
+            localStorage.setItem('name', data.name)
             window.location.href = "/dashboard"
 
         } else {

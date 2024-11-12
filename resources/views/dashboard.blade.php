@@ -27,8 +27,8 @@
 
     <div class="main-content">
         <div class="header">
-            <h2>Painel de Controle</h2>
-            <span class="user">Olá, Usuário!</span>
+            <h2 class="">Painel de Controle</h2>
+            <span class="user"></span>
         </div>
 
         <!-- Container para os cards de cursos -->

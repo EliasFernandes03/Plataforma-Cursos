@@ -8,7 +8,7 @@ use App\Http\Controllers\CourseController;
 Route::prefix('users')->middleware('jwt.auth')->group(function () {
     Route::get('/', [UserController::class, 'index']);
     Route::get('{id}', [UserController::class, 'show']);
-
+    Route::get('/role/{email}', [UserController::class, 'findRoleByEmail']);
     Route::put('update/{id}', [UserController::class, 'update']);
     Route::delete('delete/{id}', [UserController::class, 'delete']);
 });

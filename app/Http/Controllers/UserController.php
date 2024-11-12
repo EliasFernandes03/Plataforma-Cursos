@@ -22,6 +22,12 @@ class UserController extends Controller
         return response()->json($users);
     }
 
+    public function findRoleByEmail($email)
+    {
+        $user = $this->userRepository->findByEmail($email);
+        return response()->json($user->role);
+    }
+
     public function show($id)
     {
         $user = $this->userRepository->getOne($id);

@@ -194,3 +194,32 @@
         .card button:hover {
             background-color: #0056b3;
         }
+
+        .admin-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            justify-content: center;
+        }
+
+        .admin-buttons button {
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .admin-buttons button:hover {
+            background-color: #e67e22;
+        }
+
+        #editarButton {
+            background-color: #e67e22;
+        }
+
+        #excluirButton {
+            background-color: #cf1f1f;
+        }

@@ -1,0 +1,77 @@
+   /* Estilo geral */
+   * {
+       box-sizing: border-box;
+       font-family: Arial, sans-serif;
+       margin: 0;
+       padding: 0;
+   }
+
+   body {
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       min-height: 100vh;
+       background-color: #f3f4f6;
+   }
+
+   /* Contêiner do formulário */
+   .form-container {
+       background-color: #ffffff;
+       padding: 2rem;
+       border-radius: 8px;
+       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       max-width: 400px;
+       width: 100%;
+   }
+
+   /* Título do formulário */
+   .form-container h2 {
+       text-align: center;
+       color: #333;
+       margin-bottom: 1.5rem;
+   }
+
+   /* Estilo dos rótulos e campos */
+   label {
+       color: #555;
+       font-weight: bold;
+       margin-bottom: 0.5rem;
+       display: block;
+       font-size: 0.9rem;
+   }
+
+   input,
+   textarea {
+       width: 100%;
+       padding: 0.75rem;
+       border: 1px solid #ddd;
+       border-radius: 5px;
+       margin-bottom: 1rem;
+       font-size: 1rem;
+       color: #333;
+   }
+
+   input:focus,
+   textarea:focus {
+       border-color: #3498db;
+       outline: none;
+       box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+   }
+
+   /* Botão de envio */
+   button {
+       width: 100%;
+       padding: 0.75rem;
+       background-color: #3498db;
+       color: #ffffff;
+       font-size: 1rem;
+       font-weight: bold;
+       border: none;
+       border-radius: 5px;
+       cursor: pointer;
+       transition: background-color 0.3s ease;
+   }
+
+   button:hover {
+       background-color: #2980b9;
+   }

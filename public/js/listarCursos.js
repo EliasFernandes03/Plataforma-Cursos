@@ -62,14 +62,29 @@ function renderCourses(courses) {
 }
 
 function editCourse(courseId) {
-    alert(`Editar curso ${courseId}`);
-    // Lógica para editar o curso
+    window.location.href="/editar-curso"
 }
 
-function deleteCourse(courseId) {
-    alert(`Excluir curso ${courseId}`);
-    // Lógica para excluir o curso
+async function deleteCourse(courseId) {
+    try {
+        const response = await fetch(`http://localhost:8000/api/course/delete/${courseId}`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+        if (response.ok) {
+            fetchCourses()
+        } else {
+            console.error('Erro ao excluir o curso:', response.status);
+        }
+
+    } catch (error) {
+        console.error('Erro de conexão:', error);
+    }
 }
+
 
 
 function enrollCourse(courseId) {

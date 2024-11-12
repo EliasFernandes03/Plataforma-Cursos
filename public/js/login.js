@@ -13,9 +13,12 @@ async function handleLogin(event) {
             body: JSON.stringify({ email, password })
         });
 
+
         if (response.ok) {
             const data = await response.json();
+            localStorage.setItem('token',data.token)
             window.location.href = "/dashboard"
+
         } else {
             const errorData = await response.json();
             errorMessage.textContent = errorData.message || 'Credenciais incorretas';

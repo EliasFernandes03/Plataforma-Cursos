@@ -8,8 +8,12 @@
     <title>Dashboard</title>
 </head>
 
+<style>
+
+</style>
+
 <body>
-    <!-- Menu lateral -->
+
     <div class="sidebar">
         <ul>
             <li><img class="avatarImage" src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png" alt=""></li>
@@ -26,7 +30,16 @@
             <h2>Painel de Controle</h2>
             <span class="user">Olá, Usuário!</span>
         </div>
+
+        <!-- Container para os cards de cursos -->
+        <div id="courses-container" class="courses-container">
+            <h3 id="cursosDisponiveis">Cursos Disponíveis</h3>
+            <div id="courses" class="cards-container"></div>
+        </div>
     </div>
+
+    <script src="{{ asset('js/listarCursos.js') }}"></script>
+
 </body>
 
 </html>

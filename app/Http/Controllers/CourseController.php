@@ -39,13 +39,13 @@ class CourseController extends Controller
         $course = $this->courseRepository->getOne($id);
         $data = $request->validated();
         $this->courseRepository->update($course, $data);
-        return response()->json(['message' => 'usuario atualizado'], 200);
+        return response()->json(['message' => 'Curso atualizado'], 200);
     }
 
     public function delete(int $id)
     {
         $course = $this->courseRepository->getOne($id);
         $this->courseRepository->delete($course);
-        return response()->json(['message' => 'Usuario deletado com sucesso'], 204);
+        return response()->json(['message' => 'Curso deletado com sucesso'], 204);
     }
 }
